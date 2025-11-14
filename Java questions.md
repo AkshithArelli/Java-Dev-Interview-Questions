@@ -204,4 +204,61 @@ Then explain each in one line, with example if required.
 
 -------------
 
+### 2. Exception Hierarchy
+```
+java.lang.Object
+     ↓
+  Throwable
+   ├── Error (unchecked)
+   │      ├── OutOfMemoryError
+   │      ├── StackOverflowError
+   │      └── etc...
+   └── Exception
+          ├── RuntimeException (unchecked)
+          │       ├── NullPointerException
+          │       ├── ArithmeticException
+          │       ├── IllegalArgumentException
+          │       └── ArrayIndexOutOfBoundsException
+          └── Checked Exceptions
+                  ├── IOException
+                  ├── SQLException
+                  ├── ParseException
+                  └── ClassNotFoundException
+```
 
+- Exception hierarchy starts from Throwable class.
+
+- Throwable has two children: Error and Exception.
+
+- Errors are unrecoverable and represent issues outside application control.
+
+- Exceptions are recoverable and divided into 
+
+1. Checked exceptions (must be handled) 
+
+These are exceptions that the compiler forces you to handle.
+
+You MUST either:
+
+	•	use try-catch
+	•	or throws in method signature
+
+Examples:
+
+	•	IOException
+	•	SQLException
+	•	FileNotFoundException
+	•	ClassNotFoundException
+
+
+2. Unchecked exceptions (RuntimeException).
+
+These happen during execution due to programming errors. Compiler does NOT force you to catch them.
+
+Examples:
+
+	•	NullPointerException
+	•	ArithmeticException
+	•	ArrayIndexOutOfBoundsException
+	•	IllegalArgumentException
+	•	ClassCastException
