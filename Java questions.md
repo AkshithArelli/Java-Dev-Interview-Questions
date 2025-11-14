@@ -1,4 +1,4 @@
-### 1. OOOPs
+### 1. OOPs
 
 ✅ OOPS Concepts (Object-Oriented Programming) – Interview Explanation
 
@@ -262,3 +262,379 @@ Examples:
 	•	ArrayIndexOutOfBoundsException
 	•	IllegalArgumentException
 	•	ClassCastException
+
+## Custom Exceptions
+
+A custom exception is a user-defined exception that helps represent business-specific errors more clearly.
+We create custom checked exceptions by extending Exception and custom unchecked exceptions by extending RuntimeException.”
+
+
+A custom exception is an exception you define yourself when Java’s built-in exceptions are not enough for your business logic.
+
+For example:
+
+	•	“InsufficientBalanceException”
+	•	“InvalidAgeException”
+	•	“UnauthorizedUserException”
+	•	“OrderNotFoundException”
+
+They make your code more meaningful, readable, and domain-specific.
+
+⸻
+
+🟦 Types of Custom Exceptions
+
+You can create:
+
+1️⃣ Custom Checked Exceptions
+
+Extend Exception.
+
+2️⃣ Custom Unchecked Exceptions
+
+Extend RuntimeException.
+
+⸻
+
+🟦 1. Custom Checked Exception
+
+👉 Use when caller must handle the exception
+
+(either try-catch or throws)
+
+Example: InvalidAgeException
+```java
+class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+
+//Use it:
+
+public void register(int age) throws InvalidAgeException {
+    if (age < 18) {
+        throw new InvalidAgeException("Age must be 18 or above");
+    }
+}
+```
+
+⸻
+
+🟩 2. Custom Unchecked Exception
+
+👉 Use when the exception is caused by programming errors
+
+(no need to force try-catch)
+
+Extend RuntimeException.
+```java
+class InsufficientBalanceException extends RuntimeException {
+    public InsufficientBalanceException(String message) {
+        super(message);
+    }
+}
+
+//Use it:
+
+public void withdraw(double amount) {
+    if (amount > balance) {
+        throw new InsufficientBalanceException("Not enough balance");
+    }
+}
+```
+
+⸻
+
+🟧 Checked vs Unchecked Custom Exceptions
+```
+Type Extend			Must be caught?		When to use
+Checked	Exception	Yes (compile-time)	Expected business rule failures
+Unchecked			RuntimeException	No	Code bugs, invalid input, illegal states
+```
+
+⸻
+
+# Why do we need to use super(message); in custom exceptions?
+
+
+Because Exception, RuntimeException, and Throwable (the parent classes) already have a constructor that accepts an error message.
+
+Example from Java source:
+```java
+public Throwable(String message) {
+    this.detailMessage = message;
+}
+```
+So when you write:
+
+super(message);
+
+You are sending your custom message up to the parent class, so that:
+
+✔ The exception stores the message
+
+✔ The message appears in the logs
+
+✔ getMessage() returns your message
+
+✔ Stack trace shows helpful information
+
+⸻
+
+🟦 Without super(message) — the exception message becomes NULL
+
+Example:
+```
+class MyException extends RuntimeException {
+    public MyException() {
+        // NO super(message)
+    }
+}
+```
+Using it:
+```java
+throw new MyException("Something went wrong");
+```
+Output:
+```
+MyException: null
+```
+❌ No message
+❌ Hard to debug
+❌ Useless in logs and monitoring
+
+⸻
+
+🟩 With super(message) — message is preserved
+```java
+class MyException extends RuntimeException {
+    public MyException(String message) {
+        super(message);
+    }
+}
+```
+Now:
+```java
+throw new MyException("Something went wrong");
+```
+Output:
+```
+MyException: Something went wrong
+```
+✔ Message is visible
+✔ Debugging becomes easy
+✔ Logs become meaningful
+
+⸻
+
+🧠 Interview-Friendly Explanation
+
+We use super(message) to pass our custom error message to the parent Exception class. This allows the exception to store the message, display it in the stack trace, and retrieve it through getMessage(). Without it, the message will be lost.
+
+⸻
+
+🔥 Bonus: super(cause) and super(message, cause)
+
+Exception classes allow:
+```java
+super(cause);           // chain exception
+super(message, cause);  // message + root cause
+```
+These help track real underlying failures.
+
+---------------
+
+### 3. try-with-resources
+
+try-with-resources is a Java feature that automatically closes resources (like files, DB connections, sockets, streams) after their usage — without requiring a finally block.
+
+A resource is anything that implements the interface:
+
+AutoCloseable
+
+
+⸻
+
+🚫 Old way (before Java 7): Manual closing
+
+Using a file:
+```java
+BufferedReader br = null;
+try {
+    br = new BufferedReader(new FileReader("data.txt"));
+    System.out.println(br.readLine());
+} catch (IOException e) {
+    e.printStackTrace();
+} finally {
+    try {
+        if (br != null) br.close();   // must close manually
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+Problems:
+
+❌ Long code
+❌ Easy to forget closing
+❌ Possible memory/resource leaks
+
+⸻
+
+✅ New way (after Java 7): try-with-resources
+```java
+try (BufferedReader br = new BufferedReader(new FileReader("data.txt"))) {
+    System.out.println(br.readLine());
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+Advantages:
+
+✔ Resource automatically closed
+✔ No need for finally block
+✔ Cleaner code
+✔ Prevents resource leaks
+✔ More readable
+
+⸻
+
+🧠 How it works internally?
+
+At the end of the try block, Java automatically calls:
+```java
+br.close();
+``
+* because BufferedReader implements:
+```
+public interface Closeable extends AutoCloseable
+```
+* So anything implementing AutoCloseable works with try-with-resources.
+
+⸻
+
+🎯 Interview-level Summary
+
+“Try-with-resources is a Java feature that automatically closes resources at the end of a try block. Any class implementing AutoCloseable can be used. This avoids memory leaks and makes code cleaner compared to the old try-catch-finally approach.”
+
+⸻
+
+⭐ Extra Points for Interviews
+
+1. Resources are closed in reverse order
+
+Last opened → closed first.
+
+2. Works with custom resources
+
+You can create your own class:
+```java
+class MyResource implements AutoCloseable {
+    @Override
+    public void close() {
+        System.out.println("Closed automatically");
+    }
+}
+```
+Then:
+```java
+try (MyResource r = new MyResource()) {
+    // use resource
+}
+```
+3. Finally block is not required
+
+4. Less error-prone → prevents resource leaks
+
+
+------------------
+
+### 4. Constants vs Enums
+
+Here is a clear and interview-friendly explanation of Enums vs Constants in Java:
+
+⸻
+
+✅ Enums vs Constants in Java
+
+👉 Constants are simple variable values with no enforcement or behavior.
+
+👉 Enums are powerful, type-safe, self-contained classes that represent a fixed set of related values.
+⸻
+
+🔍 Practical Example (Why Enums are Better)
+
+❌ Using constants:
+```java
+public static final int PENDING = 0;
+public static final int SUCCESS = 1;
+public static final int FAILED = 2;
+
+void process(int status) {
+    if (status == SUCCESS) {
+        ...
+    }
+}
+```
+If someone passes 5, code still compiles → Not safe.
+
+⸻
+
+✅ Using enums:
+```java
+enum PaymentStatus {
+    PENDING, SUCCESS, FAILED
+}
+
+void process(PaymentStatus status) {
+    if (status == PaymentStatus.SUCCESS) {
+        ...
+    }
+}
+```
+If someone passes anything else, the compiler rejects → Safe.
+
+⸻
+
+🔥 Enums with Behavior
+
+Enums are actually classes, so you can add logic.
+```java
+enum Direction {
+    NORTH(0), SOUTH(180), EAST(90), WEST(270);
+
+    private int angle;
+
+    Direction(int angle) {
+        this.angle = angle;
+    }
+
+    public int getAngle() {
+        return angle;
+    }
+}
+```
+
+⸻
+
+🧠 When to Use What?
+
+✔ Use ENUM when:
+
+	•	Values are fixed (states, directions, types)
+	•	You want type safety
+	•	You need to attach behavior
+	•	You want clean and readable domain models
+
+✔ Use CONSTANTS when:
+
+	•	It’s a simple number/string used rarely
+	•	Behavior is not required
+	•	No need to enforce fixed acceptable values
+
+⸻
+
+Enums are preferred in modern Java for all domain-specific fixed categories.
+
+----------
