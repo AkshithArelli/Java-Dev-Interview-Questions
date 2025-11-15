@@ -524,3 +524,139 @@ The client interacts with the proxy which decides whether to forward the request
 
 ⸻
 
+### Template Design Pattern
+
+The Template Method Design Pattern is a behavioral pattern that defines the skeleton of an algorithm in a superclass but lets subclasses override specific steps of the algorithm without changing its structure.
+
+⸻
+
+🧠 What it means in simple words:
+
+You define a general structure of an operation, and let subclasses fill in the blanks.
+
+⸻
+
+✅ When to use it?
+
+	•	You have an algorithm with fixed steps, but some steps can vary.
+	•	You want to avoid code duplication for common steps.
+	•	You want to ensure all variations follow the same process.
+
+⸻
+
+🍽️ Real-Life Example: Preparing a Beverage
+
+Let’s say you are preparing Tea or Coffee, and the process is mostly the same:
+
+	1.	Boil water
+	2.	Brew
+	3.	Pour in cup
+	4.	Add condiments
+
+⸻
+
+🧱 Step-by-Step Java Example
+
+Step 1: Create an abstract class with the template method
+```java
+public abstract class Beverage {
+    // Template method
+    public final void prepareRecipe() {
+        boilWater();
+        brew();
+        pourInCup();
+        addCondiments();
+    }
+
+    private void boilWater() {
+        System.out.println("Boiling water");
+    }
+
+    private void pourInCup() {
+        System.out.println("Pouring into cup");
+    }
+
+    // Steps that subclasses will override
+    protected abstract void brew();
+    protected abstract void addCondiments();
+}
+```
+
+⸻
+
+Step 2: Create subclasses
+```java
+public class Tea extends Beverage {
+    @Override
+    protected void brew() {
+        System.out.println("Steeping the tea");
+    }
+
+    @Override
+    protected void addCondiments() {
+        System.out.println("Adding lemon");
+    }
+}
+
+public class Coffee extends Beverage {
+    @Override
+    protected void brew() {
+        System.out.println("Dripping coffee through filter");
+    }
+
+    @Override
+    protected void addCondiments() {
+        System.out.println("Adding sugar and milk");
+    }
+}
+```
+
+⸻
+
+Step 3: Use it in main
+```java
+public class Main {
+    public static void main(String[] args) {
+        Beverage tea = new Tea();
+        tea.prepareRecipe();
+
+        System.out.println("-----");
+
+        Beverage coffee = new Coffee();
+        coffee.prepareRecipe();
+    }
+}
+```
+
+⸻
+
+🖨️ Output
+```
+Boiling water
+Steeping the tea
+Pouring into cup
+Adding lemon
+-----
+Boiling water
+Dripping coffee through filter
+Pouring into cup
+Adding sugar and milk
+```
+
+⸻
+
+✅ Benefits
+
+	•	Promotes code reuse (shared logic lives in the abstract class).
+	•	Supports Open/Closed Principle – allows extending behavior without modifying the base class.
+	•	Ensures consistent execution order.
+
+⸻
+
+🚀 Where it’s used in real life?
+
+	•	Spring Framework:
+	•	JdbcTemplate, RestTemplate, KafkaTemplate all use this pattern.
+	•	You write only the custom logic; the rest is handled for you.
+	•	JUnit testing frameworks: common setup logic with customizable test methods.
+	•	Frameworks and SDKs where the flow is fixed but hooks are provided.
