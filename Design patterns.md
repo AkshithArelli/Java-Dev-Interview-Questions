@@ -379,9 +379,10 @@ public class Main {
 	•	StringBuilder in Java
 	•	Lombok @Builder
 	•	HTTP Request construction:
+	
 ```java
 new HttpRequest.Builder().header().body().build();
-``
+```
 ⸻
 
 
@@ -390,6 +391,7 @@ new HttpRequest.Builder().header().body().build();
 Proxy Pattern provides a substitute or placeholder object that controls access to another object.
 
 You use it when you want to add:
+
 	•	Logging
 	•	Security checks
 	•	Caching
