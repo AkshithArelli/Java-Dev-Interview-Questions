@@ -1,0 +1,385 @@
+# Design Patterns
+
+Design patterns are general, reusable solutions to commonly occurring problems in software design
+
+Total: 21
+
+Eg:
+
+## Creational
+
+These patterns deal with object creation mechanisms, trying to create objects in a manner suitable for the situation.
+
+  - Singleton
+  - Factory
+  - Builder
+
+## Structural 
+
+These patterns focus on how classes and objects can be combined to form larger structures.
+
+  - Proxy
+  - Facade
+
+## Behavioural
+
+These patterns are concerned with algorithms and the assignment of responsibilities between objects, focusing on communication and interaction. 
+
+  - Strategy
+  - Template
+
+
+### Singleton design pattern
+
+Definition
+
+Singleton ensures only one instance of a class exists in the entire application and provides a global point of access to it.
+
+⸻
+
+Why Use It?
+
+	•	When you need one shared object, e.g.:
+	•	Logger
+	•	Cache manager
+	•	Configuration reader
+	•	Database connection factory
+
+⸻
+
+Key Features
+
+	1.	Private constructor → prevents external object creation
+	2.	Static instance → stores the single object
+	3.	Public static method → returns the same instance every time
+
+⸻
+
+Eager Initialization (Simple but memory-heavy)
+
+Object created at application startup (whether you use it or not).
+
+```java
+public class Singleton {
+
+    private static final Singleton instance = new Singleton();
+
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        return instance;
+    }
+}
+```
+Pros
+
+	•	Simple
+	•	Thread-safe by default
+
+Cons
+
+	•	Instance created even when not needed
+  
+⸻
+
+Lazy Initialization (Not Thread-Safe)
+
+Object created at application startup (whether you use it or not).
+
+```java
+  public class MySingleton {
+      private static MySingleton instance;
+
+      private MySingleton() {
+          // Private constructor to prevent direct instantiation
+      }
+
+      public static MySingleton getInstance() {
+          if (instance == null) {
+              instance = new MySingleton();
+          }
+          return instance;
+      }
+  }
+```
+⸻
+
+Double-Checked Locking (Best balanced approach)
+
+```java
+public class Singleton {
+
+    private static volatile Singleton instance;
+
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```
+Why this is best?
+
+	•	Lazy-loaded
+	•	Thread-safe
+	•	No synchronization overhead
+
+⸻
+
+Pros
+
+	•	Saves memory
+	•	Ensures consistency
+	•	Good for shared resources
+
+Cons
+
+	•	Harder to test (global state)
+	•	Can violate Single Responsibility
+
+⸻
+
+One-Line Summary
+```
+Singleton = one instance + global access + controlled creation.
+```
+⸻
+
+### Factory Method Pattern
+
+✅ Definition (One Sentence)
+
+Factory Method is a pattern where you create objects using a method, instead of calling new directly.
+
+This allows subclasses to decide which object to create.
+
+⸻
+
+🎯 Simple Real-Life Analogy
+
+When you click “Open File”, you don’t create the PDF/Word/Excel viewer manually.
+
+The system decides which viewer to create.
+
+⸻
+
+🔥 Simplest Possible Java Example
+
+Step 1: Product
+```java
+interface Animal {
+    void speak();
+}
+```
+Step 2: Concrete Products
+```java
+class Dog implements Animal {
+    public void speak() {
+        System.out.println("Dog barks");
+    }
+}
+
+class Cat implements Animal {
+    public void speak() {
+        System.out.println("Cat meows");
+    }
+}
+```
+Step 3: Factory Method
+```java
+class AnimalFactory {
+
+    public static Animal getAnimal(String type) {
+        if (type.equals("dog")) {
+            return new Dog();
+        } else if (type.equals("cat")) {
+            return new Cat();
+        }
+
+        return null;
+    }
+}
+```
+Step 4: Client
+```java
+public class TestFactory {
+    public static void main(String[] args) {
+        Animal a1 = AnimalFactory.getAnimal("dog");
+        a1.speak();  // Dog barks
+
+        Animal a2 = AnimalFactory.getAnimal("cat");
+        a2.speak();  // Cat meows
+    }
+}
+```
+
+⸻
+
+🧠 Why Is This Factory Method?
+
+Because:
+
+❌ Without factory:
+```java
+Animal a = new Dog();   // tightly coupled
+```
+✔ With factory:
+```java
+Animal a = AnimalFactory.getAnimal("dog");  // loose coupling
+```
+Client doesn’t know which concrete class is being created.
+
+⸻
+
+⭐ When to Use This Pattern?
+
+	•	When object creation logic changes frequently
+	•	When you want to remove “new” from client code
+	•	When you want to follow Open/Closed Principle
+(add new animals later without touching client code)
+
+⸻
+
+🎯 One-Line Interview Summary
+
+“Factory Method hides the object creation logic and lets a method decide which object to create, improving flexibility and reducing coupling.”
+
+⸻
+
+### Builder Design Pattern
+
+Builder Pattern is used when:
+
+	•	You have a complex object with many fields.
+	•	Some fields are optional.
+	•	You want to create the object step-by-step in a clean readable way.
+
+Instead of writing messy constructors like:
+```java
+User u = new User("Akshith", 25, "Hyderabad", null, null, "Software");
+```
+Builder pattern lets you write:
+```java
+User u = new User.Builder()
+                .name("Akshith")
+                .age(25)
+                .city("Hyderabad")
+                .build();
+```
+Much cleaner and readable.
+
+⸻
+
+🧩 Simple Example — User Object
+
+❌ Problem Without Builder
+
+You create a User class with many fields → constructor becomes huge → difficult to remember order → prone to mistakes.
+
+⸻
+
+✅ Builder Pattern Implementation
+
+1. Create a class with static Builder
+```java
+class User {
+
+    private final String name;
+    private final int age;
+    private final String email;
+    private final String city;
+
+    private User(Builder builder) {
+        this.name = builder.name;
+        this.age = builder.age;
+        this.email = builder.email;
+        this.city = builder.city;
+    }
+
+    // Builder Inner Class
+    public static class Builder {
+        private String name;
+        private int age;
+        private String email;
+        private String city;
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+        public Builder age(int age) {
+            this.age = age;
+            return this;
+        }
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+        public Builder city(String city) {
+            this.city = city;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return name + ", " + age + ", " + email + ", " + city;
+    }
+}
+```
+
+⸻
+
+2. Creating the object (super simple)
+```java
+public class Main {
+    public static void main(String[] args) {
+        User user = new User.Builder()
+                        .name("Akshith")
+                        .age(25)
+                        .email("a@gmail.com")
+                        .city("Hyderabad")
+                        .build();
+
+        System.out.println(user);
+    }
+}
+```
+
+⸻
+
+⭐ Interview-Friendly Summary
+
+👍 When to use Builder Pattern?
+
+	•	Object has many fields, especially optional ones.
+	•	You want readable, flexible, immutable object creation.
+	•	Avoid telescoping constructors (too many constructor arguments).
+
+👍 Advantages
+
+	•	Clean & readable object creation.
+	•	Avoids constructor explosion.
+	•	Supports immutability.
+	•	You can validate fields before building.
+
+👍 Real Life Examples
+
+	•	StringBuilder in Java
+	•	Lombok @Builder
+	•	HTTP Request construction:
+```java
+new HttpRequest.Builder().header().body().build();
+``
+⸻
