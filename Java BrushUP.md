@@ -2,6 +2,13 @@
 
 OOP is a programming paradigm that organizes code into objects — real-world entities that contain data (fields) and behavior (methods).
 
+OOP helps create software that is:
+
+- **Modular**
+- **Reusable**
+- **Maintainable**
+- **Extensible**
+
 OOP has 4 main pillars:
 
 ⸻
@@ -10,14 +17,14 @@ OOP has 4 main pillars:
 
 You expose only the necessary details and hide the internal working.
 
-✔ Example:
+ Example:
 ```java
 List<Integer> list = new ArrayList<>();
 list.add(10);
 ```
 You know add() adds an element — you don’t know how the array grows internally → that is abstraction.
 
-✔ Interview line:
+ Interview line:
 
 Abstraction reduces complexity by exposing only essential features.
 
@@ -27,7 +34,7 @@ Abstraction reduces complexity by exposing only essential features.
 
 Keep variables private and expose functionality through getters/setters.
 
-✔ Example:
+ Example:
 ```java
 class BankAccount {
     private double balance;
@@ -38,7 +45,7 @@ class BankAccount {
 ```
 balance is protected — clients cannot change it illegally.
 
-✔ Interview line:
+ Interview line:
 
 Encapsulation improves security and avoids accidental modification of data.
 
@@ -48,12 +55,12 @@ Encapsulation improves security and avoids accidental modification of data.
 
 A child class derives features from a parent class.
 
-✔ Example:
+ Example:
 ```java
 class Vehicle { void start() {} }
 class Car extends Vehicle { void playMusic() {} }
 ```
-✔ Interview line:
+ Interview line:
 
 Inheritance provides reusability and establishes an IS-A relationship.
 
@@ -63,7 +70,7 @@ Inheritance provides reusability and establishes an IS-A relationship.
 
 Same method behaves differently depending on the object.
 
-✔ Two types:
+ Two types:
 
 1. Compile-time (Method Overloading)
 ```java
@@ -77,7 +84,7 @@ class Dog extends Animal { void sound() { System.out.println("Bark"); } }
 ```
 Calling sound() chooses method at runtime based on object type.
 
-✔ Interview line:
+ Interview line:
 
 Polymorphism increases flexibility and enables dynamic behavior.
 
@@ -87,7 +94,7 @@ Here is a clean, crisp, interview-ready brush-up on Abstract Class vs Interface 
 
 ⸻
 
-# 🔥 ABSTRACT CLASS vs INTERFACE — Brush-Up
+# 🔥 ABSTRACT CLASS vs INTERFACE
 
 1️⃣ Purpose
 
@@ -103,12 +110,14 @@ Defines a contract → what the class must do, not how.
 
 2️⃣ Methods
 
-✔ Abstract Class
+ Abstract Class
+ 
 	•	Can have abstract methods (no body)
 	•	Can have concrete methods (with body)
 	•	Can have constructor
 
-✔ Interface
+ Interface
+ 
 	•	Until Java 8 → only abstract methods
 	•	After Java 8 → can have:
 	•	default methods (with body)
@@ -120,11 +129,13 @@ Defines a contract → what the class must do, not how.
 
 3️⃣ Fields
 
-✔ Abstract Class
+ Abstract Class
+ 
 	•	Can have instance variables
 	•	Can have different access modifiers (private, protected, etc.)
 
-✔ Interface
+ Interface
+ 
 	•	All fields are public static final implicitly
 (i.e., constants only)
 
@@ -132,11 +143,13 @@ Defines a contract → what the class must do, not how.
 
 4️⃣ Inheritance Rules
 
-✔ Abstract Class
+ Abstract Class
+ 
 	•	A class can extend only ONE abstract class (single inheritance)
 	•	Abstract class can extend another class (abstract or concrete)
 
-✔ Interface
+ Interface
+ 
 	•	A class can implement multiple interfaces
 	•	Interface can extend multiple interfaces
 
@@ -144,18 +157,21 @@ Defines a contract → what the class must do, not how.
 
 5️⃣ When to Use What? (Interview Gold Answer)
 
-✔ Use Abstract Class when:
+ Use Abstract Class when:
+ 
 	•	You want to provide partial implementation
 	•	You want shared variables or methods
 	•	Classes are closely related
 	•	You need non-final fields
 
 Real Example:
+
 Animal abstract class → all animals have eat(), sleep(), but sound differs.
 
 ⸻
 
-✔ Use Interface when:
+ Use Interface when:
+ 
 	•	You want loose coupling
 	•	You want to define a behavior/capability
 (e.g., Runnable, Serializable, Comparable)
@@ -171,6 +187,7 @@ A class can be both Runnable and Comparable at the same time.
 Constants are simple variable values with no enforcement or behavior.
 
 Enums are powerful, type-safe, self-contained classes that represent a fixed set of related values. 
+
 ```java
 public static final int PENDING = 0;
 public static final int SUCCESS = 1;
@@ -401,7 +418,7 @@ For parallel execution of stream operations:
 ```java
 list.parallelStream().forEach(System.out::println);
 ```
-✔ Can speed up CPU-intensive tasks
+ Can speed up CPU-intensive tasks
 
 ❌ Not recommended for shared mutable data
 
@@ -417,7 +434,7 @@ A JavaScript engine added in Java 8 (deprecated later).
 
 ### 🔥 1. Consumer — Takes input, returns nothing
 
-✔ Definition:
+ Definition:
 
 A Consumer represents an operation that accepts a single input and returns no result.
 ```java
@@ -426,7 +443,7 @@ public interface Consumer<T> {
     void accept(T t);
 }
 ```
-✔ Example:
+ Example:
 ```java
 Consumer<String> print = s -> System.out.println(s);
 print.accept("Hello");  // prints: Hello
@@ -438,7 +455,7 @@ list.forEach(s -> System.out.println(s));
 
 ### 🔥 2. Supplier — Provides output, takes nothing
 
-✔ Definition:
+ Definition:
 
 A Supplier takes no input and returns a value.
 ```java
@@ -447,7 +464,7 @@ public interface Supplier<T> {
     T get();
 }
 ```
-✔ Example:
+ Example:
 ```java
 Supplier<Double> randomSupplier = () -> Math.random();
 System.out.println(randomSupplier.get());
@@ -459,7 +476,7 @@ Supplier<String> getName = () -> "Akshith";
 
 ### 🔥 3. Predicate — Takes input, returns boolean
 
-✔ Definition:
+ Definition:
 
 A Predicate tests a condition and returns true/false.
 ```java
@@ -468,7 +485,7 @@ public interface Predicate<T> {
     boolean test(T t);
 }
 ```
-✔ Example:
+ Example:
 ```java
 Predicate<Integer> isEven = n -> n % 2 == 0;
 System.out.println(isEven.test(10)); // true
@@ -491,7 +508,7 @@ These were added mainly for backward compatibility with the Collections and Stre
 
 ### 1️⃣ Default Methods in Interfaces
 
-✔ What is a Default Method?
+ What is a Default Method?
 
 A method with a body inside an interface.
 ```java
@@ -499,12 +516,12 @@ default void show() {
     System.out.println("Showing...");
 }
 ```
-✔ Why Needed?
+ Why Needed?
 
 	•	To add new methods to interfaces without breaking existing implementations
 	•	To provide common reusable behavior
 
-✔ Usage Example:
+ Usage Example:
 ```java
 interface Vehicle {
     default void start() {
@@ -516,7 +533,7 @@ class Car implements Vehicle { }
 
 new Car().start();  // Vehicle starting...
 ```
-✔ Inside default methods you can:
+ Inside default methods you can:
 
 	•	Use this
 	•	Override them in implementing classes
@@ -546,7 +563,7 @@ When two interfaces provide the same default method, the class must override it 
 
 ### 2️⃣ Static Methods in Interfaces
 
-✔ What are Static Methods?
+ What are Static Methods?
 
 A static method inside an interface is just like a static method in a class, but it belongs to the interface only, not to implementing classes.
 ```java
@@ -556,7 +573,7 @@ interface Utils {
     }
 }
 ```
-✔ How to call?
+ How to call?
 ```java
 Utils.log("Hello");
 ```
@@ -565,7 +582,7 @@ Utils.log("Hello");
 Utils obj = new UtilsImpl();
 obj.log("Hi"); // ❌ Not allowed
 ```
-✔ Why Static Methods?
+ Why Static Methods?
 
 	•	Utility methods belonging logically to the interface
 	•	Cleaner design (e.g., Collectors.toList() in Streams API)
@@ -590,13 +607,13 @@ Java uses exceptions to handle errors gracefully instead of crashing.
                          /        \
                Checked Exceptions  RuntimeException
 ```
-## ✔ Error
+##  Error
 
 	•	Serious issues → Not recoverable
 	•	Examples: OutOfMemoryError, StackOverflowError
 	•	You should not catch them normally.
 
-## ✔ Exception
+##  Exception
 
 Recoverable problems. Two types:
 
@@ -604,7 +621,7 @@ Recoverable problems. Two types:
 
 ### 2️⃣ Checked vs Unchecked Exceptions
 
-## ✔ Checked Exceptions
+##  Checked Exceptions
 
 	•	Checked at compile time
 	•	Must be handled using:
@@ -628,7 +645,7 @@ try {
 
 ⸻
 
-## ✔ Unchecked Exceptions (RuntimeExceptions)
+##  Unchecked Exceptions (RuntimeExceptions)
 
 	•	Occur at runtime
 	•	Not required to catch or declare
@@ -698,13 +715,13 @@ try (FileReader fr = new FileReader("file.txt")) {
 
 ### 5️⃣ throws vs throw
 
-✔ throw
+ throw
 
 Used to manually throw an exception.
 ```java
 throw new IllegalArgumentException("Invalid age");
 ```
-✔ throws
+ throws
 
 Used in method signature to indicate the method may throw exceptions.
 ```java
@@ -781,4 +798,737 @@ public class GlobalExceptionHandler {
 ```
 
 # Sealed Classes in Java
+
+Sealed classes restrict which classes can extend them.
+
+Each permitted subclass must be final, sealed, or non-sealed, giving complete control over inheritance and enabling exhaustive pattern matching.
+```java
+public sealed class Payment permits CardPayment, UpiPayment, WalletPayment { }
+
+public final class CardPayment extends Payment { }
+public final class UpiPayment extends Payment { }
+public non-sealed class WalletPayment extends Payment { }
+```
+
+# Serialization vs Deserialization
+```
+Concept				Meaning										Direction
+Serialization		Converting a Java object → byte stream		Object ➝ Bytes
+Deserialization		Converting a byte stream → Java object		Bytes ➝ Object
+```
+
+# sealed classes
+
+1️⃣ Definition
+
+transient keyword prevents a field from being serialized—those fields are skipped when an object is converted to bytes.
+
+⸻
+
+2️⃣ Why Needed?
+
+	•	To avoid serializing sensitive data (passwords, tokens)
+	•	To skip temporary or derived values
+
+⸻
+
+3️⃣ Key Features
+
+	•	transient fields → not written during serialization
+	•	When deserialized → restored with default values
+	•	Works only with fields
+	•	static fields aren’t serialized anyway
+
+⸻
+
+4️⃣ Example
+```java
+class User implements Serializable {
+    private String name;
+    private transient String password; // will not be serialized
+}
+
+User u = new User("Akshith", "secret123");
+```
+After deserialization:
+
+	•	name = “Akshith”
+	•	password = null
+
+⸻
+
+# Shallow Copy vs Deep Copy
+
+### Shallow Copy
+
+A shallow copy copies only the top-level object, but does not copy nested objects. Both objects share the same references inside.
+
+### Deep Copy
+
+A deep copy creates a fully independent clone by copying all nested objects recursively.
+
+Shallow Copy example
+```java
+class Student implements Cloneable {
+    String name;
+    Address address; // mutable reference type
+
+    public Student clone() throws CloneNotSupportedException {
+        return (Student) super.clone(); // shallow copy
+    }
+}
+
+class Address {
+    String city;
+}
+```
+
+Deep Copy example
+```java
+class Student implements Cloneable {
+    String name;
+    Address address;
+
+    public Student clone() throws CloneNotSupportedException {
+        Student copy = (Student) super.clone();
+        copy.address = new Address(address.city); // deep copy
+        return copy;
+    }
+}
+
+class Address {
+    String city;
+    Address(String city) { this.city = city; }
+}
+```
+
+# Multithreading
+
+### ✅ 1️⃣ Thread — Definition
+
+A Thread is the smallest unit of execution in a program. Multiple threads allow parallelism.
+
+⸻
+
+🚀 Why Threads?
+
+	•	Perform multiple tasks simultaneously
+	•	Improve performance
+	•	Background tasks (timers, async calls, schedulers)
+
+⸻
+
+
+### ✅ 2️⃣ Thread Creation (Two Ways)
+
+Method 1: Extending Thread class
+```java
+class MyThread extends Thread {
+    @Override
+    public void run() {
+        System.out.println("Thread running");
+    }
+}
+
+new MyThread().start();
+```
+Method 2: Implementing Runnable (preferred)
+```java
+class MyTask implements Runnable {
+    public void run() {
+        System.out.println("Task executing");
+    }
+}
+
+Thread t = new Thread(new MyTask());
+t.start();
+```
+✔ Runnable is preferred because Java supports multiple interface inheritance, not multiple class inheritance.
+
+⸻
+
+
+### ✅ 3️⃣ start() vs run()
+```
+start()							run()
+Creates a new OS thread			Does NOT create a new thread
+Calls JVM to schedule thread	Runs like a normal method
+Executes asynchronously			Executes synchronously
+```
+Example:
+```java
+Thread t = new Thread(() -> System.out.println("Running"));
+t.start();  // New thread  
+t.run();    // Same thread (main)
+```
+
+⸻
+
+### ✅ 4️⃣ Thread Life Cycle
+
+NEW → RUNNABLE → RUNNING → BLOCKED/WAITING → TERMINATED
+
+States:
+```
+	1.	NEW – thread created but start() not called
+	2.	RUNNABLE – eligible for CPU scheduling
+	3.	RUNNING – executing instructions
+	4.	BLOCKED / WAITING
+		•	sleep()
+		•	wait()
+		•	I/O blocking
+	5.	TERMINATED – completed or stopped
+```
+⸻
+
+### ✅ 1️⃣ Synchronization
+
+Definition
+
+Synchronization ensures only one thread at a time can access shared resources, preventing race conditions.
+
+⸻
+
+Examples
+
+✔ Synchronized Method
+```java
+public synchronized void increment() {
+    count++;
+}
+```
+✔ Synchronized Block (preferred)
+```
+synchronized (lock) {
+    count++;
+}
+```
+✔ Object-level Lock vs Class-level Lock
+```
+public synchronized void method() {} 
+// locks 'this' object
+
+public static synchronized void method() {}
+// locks Class object
+```
+
+⸻
+
+### ✅ 6️⃣ wait(), notify(), notifyAll()
+
+Used for inter-thread communication, especially in producer–consumer.
+
+✔ wait()
+
+	•	Releases lock
+	•	Moves thread to WAITING state
+
+✔ notify()
+
+	•	Wakes one waiting thread
+
+✔ notifyAll()
+
+	•	Wakes all waiting threads
+
+Example:
+```
+synchronized (lock) {
+    lock.wait();      // thread waits
+    lock.notify();    // wake one
+    lock.notifyAll(); // wake all
+}
+```
+✔ Must be called inside synchronized block
+✔ Used for coordination between threads
+
+⸻
+
+### ✅ 7️⃣ volatile — Definition
+
+volatile ensures visibility of changes across threads.
+
+What it does:
+
+	•	Prevents thread caching
+	•	Always reads from main memory
+	•	Writes go directly to main memory
+
+Example:
+```java
+volatile boolean flag = true;
+```
+Without volatile, one thread may not see updated values written by another thread.
+
+volatile DOES NOT:
+
+	•	Make operations atomic
+	•	Replace synchronization
+
+⸻
+
+### ✅ 8️⃣ thread.join() — Definition
+
+join() makes one thread wait until another thread completes execution.
+
+Example:
+```java
+Thread t = new Thread(() -> {
+    System.out.println("Task");
+});
+
+t.start();
+t.join();  // main waits until t finishes
+System.out.println("Main continues");
+```
+✔ Used when a task must finish before continuing
+✔ Useful in multi-thread pipelines
+
+⸻
+
+### ✅ 9️⃣ Thread Priority
+
+In Java:
+
+	•	Priorities range 1 to 10
+	•	Thread.MAX_PRIORITY = 10
+	•	Thread.MIN_PRIORITY = 1
+	•	Thread.NORM_PRIORITY = 5
+
+Set priority:
+
+t.setPriority(Thread.MAX_PRIORITY);
+
+But…
+
+Thread priority is only a hint to the scheduler.
+JVM & OS may ignore it.
+
+⸻
+
+Here is a clean, crisp, interview-ready brush-up on Synchronization, Deadlocks, and ReentrantLock — in the structured format you prefer.
+
+⸻
+
+🚀 BRUSH-UP: SYNCHRONIZATION, DEADLOCK, REENTRANTLOCK
+
+⸻
+
+# 🔥 Deadlock
+
+Definition
+
+Deadlock is a situation where two or more threads are permanently blocked, each waiting for a resource held by the other.
+
+⸻
+
+### Four Conditions Required for Deadlock (VERY IMPORTANT)
+
+All four must exist simultaneously:
+
+1️⃣ Mutual Exclusion
+Only one thread can access a resource at a time.
+
+2️⃣ Hold and Wait
+Thread holds one resource and waits for another.
+
+3️⃣ No Preemption
+Resources cannot be forcibly taken away.
+
+4️⃣ Circular Wait
+Thread A waits for Thread B’s resource,
+Thread B waits for Thread C’s resource…
+Thread N waits for Thread A’s resource.
+
+If you break any one of these conditions → deadlock is prevented.
+
+⸻
+
+Simple Deadlock Example
+```java
+Thread t1 = new Thread(() -> {
+            synchronized (lock1) {
+                System.out.println("T1 locked lock1");
+
+                try { Thread.sleep(100); } catch (Exception ignored) {}
+
+                synchronized (lock2) {
+                    System.out.println("T1 locked lock2");
+                }
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            synchronized (lock2) {
+                System.out.println("T2 locked lock2");
+
+                try { Thread.sleep(100); } catch (Exception ignored) {}
+
+                synchronized (lock1) {
+                    System.out.println("T2 locked lock1");
+                }
+            }
+        });
+
+        t1.start();
+        t2.start();
+```		
+Two threads locking in opposite order → deadlock.
+
+⸻
+
+### 🛡 Deadlock Prevention Techniques
+
+✔ 1. Lock Ordering (Most Common)
+
+Always acquire locks in the same order everywhere.
+
+synchronized(lock1) {
+    synchronized(lock2) { }
+}
+
+⸻
+
+✔ 2. Timeout using tryLock()
+
+If lock cannot be acquired → avoid waiting forever.
+
+if (lock.tryLock(100, TimeUnit.MILLISECONDS)) {
+    // do work
+} else {
+    // handle timeout
+}
+
+
+⸻
+
+✔ 3. Avoid Nested Locks
+
+Break complex locking structures.
+Simplify critical sections.
+
+⸻
+
+✔ 4. Use Higher Level Concurrency Tools
+
+	•	Executors
+	•	Semaphores
+	•	ConcurrentHashMap
+	•	Atomic variables
+
+⸻
+
+✔ 5. Using volatile + immutable objects
+
+Reduces need for locking.
+
+⸻
+
+# 🔐 ReentrantLock
+
+Definition
+
+A reentrant lock is an advanced locking mechanism from java.util.concurrent.locks that allows a thread to acquire the same lock multiple times without blocking itself.
+
+⸻
+
+Why Needed?
+
+	•	More flexibility than synchronized
+	•	Allows:
+	•	timed lock attempts
+	•	interruptible lock attempts
+	•	fairness policies
+	•	manual lock/unlock control
+
+⸻
+
+Key Features
+
+✔ 1. Reentrancy
+
+A thread holding a lock can acquire it again.
+
+✔ 2. tryLock()
+
+Avoids blocking forever; useful to prevent deadlocks.
+
+if (lock.tryLock()) {
+    // acquired
+}
+
+✔ 3. tryLock(timeout, unit)
+
+Wait for limited time → timeout instead of deadlock.
+
+✔ 4. Interruptible Locks
+
+lock.lockInterruptibly();
+
+Useful when a waiting thread should be interruptible.
+
+✔ 5. Fairness Policy
+
+ReentrantLock lock = new ReentrantLock(true); // fair mode
+
+Maintains queue order of threads.
+
+⸻
+```java
+import java.util.concurrent.locks.ReentrantLock;
+
+public class ReentrantExample {
+
+    private static final ReentrantLock lock = new ReentrantLock();
+
+    public static void main(String[] args) {
+        new ReentrantExample().methodA();
+    }
+
+    public void methodA() {
+        lock.lock();   // Thread acquires lock 1st time
+        try {
+            System.out.println("Inside methodA - lock acquired once");
+
+            methodB(); // Call another method that tries to acquire same lock
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void methodB() {
+        lock.lock();   // Thread acquires SAME LOCK 2nd time
+        try {
+            System.out.println("Inside methodB - lock acquired second time by SAME thread");
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+```
+
+Here is your clean, crisp, interview-ready brush-up for:
+	•	Runnable vs Callable
+	•	Future vs CompletableFuture
+	•	@Async vs ThreadPoolExecutor
+
+Structured in the same format you prefer.
+
+⸻
+
+# Runnable vs Callable
+
+⸻
+
+✅ 1️⃣ Definition
+
+Runnable
+
+Represents a task that does not return a value and cannot throw checked exceptions.
+
+Callable
+
+Represents a task that returns a value and can throw checked exceptions.
+
+⸻
+Examples:
+```java
+Runnable task = () -> {
+	System.out.println("Runnable task is running.");
+};
+
+Thread thread = new Thread(task);
+thread.start(); // Starts the thread
+
+Callable<Integer> task = () -> {
+	System.out.println("Callable task is running.");
+	return 123; // return result
+};
+```	
+⸻
+
+
+# 🚀 Future vs CompletableFuture
+
+✔ 1️⃣ Future
+
+Represents the result of an asynchronous computation, but is blocking and limited.
+
+✔ 2️⃣ CompletableFuture — Definition
+
+An advanced async API that supports non-blocking, chaining, callbacks, combining tasks, and fully asynchronous pipelines.
+
+⸻
+
+✔ Examples
+
+Future (Blocking)
+```java
+Future<Integer> future = executor.submit(() -> 10);
+int result = future.get(); // blocking
+```
+
+⸻
+
+CompletableFuture (Non-Blocking)
+```java
+CompletableFuture.supplyAsync(() -> 10)
+    .thenApply(n -> n * 2)
+    .thenAccept(System.out::println);
+```
+Pipeline explained:
+
+	•	supplyAsync → produce value
+	•	thenApply → transform value
+	•	thenAccept → consume value
+
+✔ No blocking
+
+✔ Runs asynchronously
+
+⸻
+
+✔ One-line Summary
+
+Future is blocking and limited, while CompletableFuture supports async pipelines, chaining, combining tasks, and non-blocking programming.
+
+⸻
+
+# ExecutorService & Thread pools
+
+ExecutorService manages a pool of threads.
+
+Instead of creating threads manually, we submit tasks to the executor.
+
+This improves performance, reduces memory usage, avoids too many threads, and provides clean task management.
+
+A thread pool is a group of worker threads maintained by the ExecutorService.
+```
+           Submit Tasks
+                |
+                v
+        +-----------------+
+        | ExecutorService |
+        +-----------------+
+          /     |      \
+         v      v       v
+   Worker1   Worker2  Worker3   <-- Thread Pool
+```
+
+# ForkJoinPool for divide-and-conquer vs vs normal ExecutorService
+
+It uses a technique called:
+
+Fork → Divide task into smaller subtasks
+
+Join → Combine results of subtasks
+
+Think of it like splitting a big job into small parts, processing all parts in parallel, then merging results.
+
+⸻
+
+Why ForkJoinPool (vs normal ExecutorService)?
+
+Normal ExecutorService works best when:
+
+•	each task is independent
+•	tasks are not recursively broken down
+
+ForkJoinPool is designed for:
+
+•	recursive tasks (divide and conquer)
+•	tasks that can be split into smaller tasks
+•	tasks that benefit from parallel computation (CPU-heavy)
+```
+                          MAIN TASK
+                              |
+                     -----------------
+                     |               |
+                  SubTask1       SubTask2
+                   |   |           |   |
+                T1    T2        T3     T4
+```
+All run in parallel → Combine results → Final answer
+
+# @Async vs ThreadPoolExecutor
+
+@Async is only a declarative annotation for executing a method asynchronously. It internally uses a TaskExecutor (usually ThreadPoolTaskExecutor).
+
+If you need fine control over the thread pool (core size, max size, queue, rejection policy), configure a ThreadPoolTaskExecutor manually and point @Async to it.
+
+
+Here is a clean, crisp, interview-ready brush-up on Atomic Classes vs volatile — in your preferred structured format.
+
+⸻
+
+# Atomic Classes vs volatile
+
+⸻
+
+volatile
+
+volatile guarantees visibility of changes across threads but does NOT make operations atomic.
+
+Atomic Classes (java.util.concurrent.atomic)
+
+Atomic classes provide atomic (thread-safe) operations like increment, decrement, compare-and-set without using synchronization.
+
+Example:
+
+Even if volatile int count is visible to all threads,
+
+count++;
+
+is NOT atomic because it’s 3 operations internally:
+
+	1.	read
+	2.	increment
+	3.	write
+
+Multiple threads can interleave → inconsistent results.
+
+⸻
+
+🚀 Atomic Classes (Overview)
+
+Popular classes:
+
+	•	AtomicInteger
+	•	AtomicLong
+	•	AtomicBoolean
+	•	AtomicReference
+	•	AtomicLongArray, etc.
+
+⸻
+
+🔥 AtomicInteger Example
+
+AtomicInteger count = new AtomicInteger(0);
+```
+count.incrementAndGet(); // atomic ++
+count.getAndIncrement();
+count.addAndGet(5);
+```
+These operations are atomic, no race conditions, no synchronized needed.
+
+🚀 volatile Example (Visibility Guarantee)
+
+```java
+volatile boolean flag = true;
+
+Thread t = new Thread(() -> {
+    while (flag) { }
+    System.out.println("Stopped");
+});
+t.start();
+
+Thread.sleep(1000);
+flag = false; // visible immediately to t
+```
+
+### ✔ Difference
+
+volatile prevents stale reads; atomic classes prevent race conditions.
+
+⸻
 
